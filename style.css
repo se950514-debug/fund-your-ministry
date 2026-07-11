@@ -1466,3 +1466,13 @@ body.modal-open {
     .ranking-label { display: none; }
     .modal-card { padding: 28px 20px; }
 }
+
+
+/* Growth path difficulty details */
+.growth-step em {
+    display: block;
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 12px;
+    font-style: normal;
+}
