@@ -290,45 +290,19 @@ function calculateGrowthPath(ministryScores) {
     return [];
   }
 
-  const highestScore = ministryScores[0].score;
-  const minimumScore = Math.max(45, highestScore - 20);
-
-  const suitableMinistries = ministryScores
-    .filter((ministry) => ministry.score >= minimumScore)
-    .sort((a, b) => {
-      if (a.difficulty !== b.difficulty) {
-        return a.difficulty - b.difficulty;
-      }
-
-      return b.score - a.score;
-    });
-
   const path = [];
 
   [1, 2, 3, 4].forEach((difficulty) => {
-    const match = suitableMinistries.find((ministry) => {
-      return (
-        ministry.difficulty === difficulty &&
-        !path.some((item) => item.id === ministry.id)
-      );
-    });
+    const bestMatch = ministryScores
+      .filter((ministry) => ministry.difficulty === difficulty)
+      .sort((a, b) => b.score - a.score)[0];
 
-    if (match) {
-      path.push(match);
+    if (bestMatch) {
+      path.push(bestMatch);
     }
   });
 
-  if (path.length < 3) {
-    suitableMinistries.forEach((ministry) => {
-      const alreadyIncluded = path.some((item) => item.id === ministry.id);
-
-      if (!alreadyIncluded && path.length < 4) {
-        path.push(ministry);
-      }
-    });
-  }
-
-  return path.slice(0, 4);
+  return path;
 }
 
 function displayPersonalAnalysis(abilityIndexes, ministryScores) {
